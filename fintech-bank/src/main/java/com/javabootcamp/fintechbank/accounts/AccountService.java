@@ -43,6 +43,17 @@ public class AccountService {
                 .toList();
     }
 
+    public AccountResponse getAccountByAccountNo(Integer no) {
+        Optional<Account> optionalAccount = accountRepository.findById(no);
+        if (optionalAccount.isEmpty()) {
+            throw new NotFoundException("Account not found");
+        }
+
+        Account account = optionalAccount.get();
+
+        return new AccountResponse(account.getNo(), account.getType(), account.getName(), account.getBalance());
+    }
+
     public AccountResponse depositAccount(Integer accountNo, DepositRequest depositRequest) {
         Optional<Account> optionalAccount = accountRepository.findById(accountNo);
         if (optionalAccount.isEmpty()) {

@@ -39,6 +39,21 @@ public class AccountController {
         return accountService.getAccounts();
     }
 
+    @Operation(summary = "My sugar daddy, หมดใจเลยที่ฟ้าให้พ่อ")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "รักจริงไม่ได้หลอก แค่อยากจะขอให้พ่อช่วยฟ้าหน่อย",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = AccountResponse.class)))
+                    })
+    })
+    @GetMapping("{accountNo}")
+    public AccountResponse getAccountByAccountNo(
+            @PathVariable Integer accountNo
+    ) {
+        return accountService.getAccountByAccountNo(accountNo);
+    }
+
     @Operation(summary = "จนมาเห็นกับตา จนพาใจมาเจ็บ")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "ฉีกบ่มีหม่องเย็บ หัวใจที่ให้เจ้า",
