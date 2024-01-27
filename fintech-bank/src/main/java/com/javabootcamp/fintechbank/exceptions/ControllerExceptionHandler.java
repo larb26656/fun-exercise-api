@@ -30,6 +30,18 @@ public class ControllerExceptionHandler {
         );
     }
 
+    @ExceptionHandler(value = {BadRequestException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrorResponse handleBadRequestException(BadRequestException notValidException, WebRequest request) {
+        return new ApiErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                notValidException.getMessage(),
+                request.getDescription(false)
+        );
+    }
+
     @ExceptionHandler(value = {NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrorResponse handleNotFoundRequestException(NotFoundException notValidException, WebRequest request) {
@@ -41,6 +53,7 @@ public class ControllerExceptionHandler {
                 request.getDescription(false)
         );
     }
+
 
     @ExceptionHandler(value = {InternalServerException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

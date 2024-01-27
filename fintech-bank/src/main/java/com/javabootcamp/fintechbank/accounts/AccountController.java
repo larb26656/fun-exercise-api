@@ -3,6 +3,7 @@ package com.javabootcamp.fintechbank.accounts;
 import com.javabootcamp.fintechbank.accounts.models.create_account.CreateAccountRequest;
 import com.javabootcamp.fintechbank.accounts.models.get_account.AccountResponse;
 import com.javabootcamp.fintechbank.accounts.models.deposit.DepositRequest;
+import com.javabootcamp.fintechbank.accounts.models.with_draw.WithdrawRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -50,7 +51,7 @@ public class AccountController {
         return accountService.createAccount(createAccountRequest);
     }
 
-    @Operation(summary = "withdraw from an account")
+    @Operation(summary = "deposit from an account")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "withdraw money from specific account",
                     content = {
@@ -64,6 +65,22 @@ public class AccountController {
             @RequestBody @Valid DepositRequest depositRequest
     ) {
         return accountService.depositAccount(accountNo, depositRequest);
+    }
+
+    @Operation(summary = "บักคนซั่วจั่งอ้าย มันเอาเหล้ายาปลาปิ้งเป็นใหญ่")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "มันบ่เหมาะกับไผไคแนแต่ไปเลาะหาเซ็นเหล้า",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AccountResponse.class))
+                    })
+    })
+    @PostMapping("/{accountNo}/withdraw")
+    public AccountResponse withdrawAccount(
+            @PathVariable(name = "accountNo") Integer accountNo,
+            @RequestBody @Valid WithdrawRequest withdrawRequest
+    ) {
+        return accountService.withdrawAccount(accountNo, withdrawRequest);
     }
 }
 
