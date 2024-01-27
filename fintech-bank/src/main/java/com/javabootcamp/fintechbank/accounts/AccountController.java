@@ -84,6 +84,14 @@ public class AccountController {
         return accountService.withdrawAccount(accountNo, withdrawRequest);
     }
 
+    @Operation(summary = "แม่ฮ้างมหาเสน่ห์")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "...",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AccountResponse.class))
+                    })
+    })
     @PostMapping("/{accountNo}/transfer/{targetAccountNo}")
     public AccountResponse transferMoney(
             @PathVariable Integer accountNo,
