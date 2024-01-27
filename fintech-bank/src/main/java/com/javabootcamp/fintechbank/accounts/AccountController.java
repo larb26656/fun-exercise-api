@@ -3,6 +3,7 @@ package com.javabootcamp.fintechbank.accounts;
 import com.javabootcamp.fintechbank.accounts.models.create_account.CreateAccountRequest;
 import com.javabootcamp.fintechbank.accounts.models.get_account.AccountResponse;
 import com.javabootcamp.fintechbank.accounts.models.deposit.DepositRequest;
+import com.javabootcamp.fintechbank.accounts.models.transfer.TransferMoneyRequest;
 import com.javabootcamp.fintechbank.accounts.models.with_draw.WithdrawRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -61,7 +62,7 @@ public class AccountController {
     })
     @PostMapping("/{accountNo}/deposit")
     public AccountResponse depositAccount(
-            @PathVariable(name = "accountNo") Integer accountNo,
+            @PathVariable Integer accountNo,
             @RequestBody @Valid DepositRequest depositRequest
     ) {
         return accountService.depositAccount(accountNo, depositRequest);
@@ -77,10 +78,19 @@ public class AccountController {
     })
     @PostMapping("/{accountNo}/withdraw")
     public AccountResponse withdrawAccount(
-            @PathVariable(name = "accountNo") Integer accountNo,
+            @PathVariable Integer accountNo,
             @RequestBody @Valid WithdrawRequest withdrawRequest
     ) {
         return accountService.withdrawAccount(accountNo, withdrawRequest);
+    }
+
+    @PostMapping("/{accountNo}/transfer/{targetAccountNo}")
+    public AccountResponse transferMoney(
+            @PathVariable Integer accountNo,
+            @PathVariable Integer targetAccountNo,
+            @RequestBody @Valid TransferMoneyRequest transferMoneyRequest
+    ) {
+        return accountService.transferMoney(accountNo, targetAccountNo, transferMoneyRequest);
     }
 }
 
