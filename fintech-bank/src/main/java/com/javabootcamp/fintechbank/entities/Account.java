@@ -1,4 +1,4 @@
-package com.javabootcamp.fintechbank.accounts;
+package com.javabootcamp.fintechbank.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // If we found an error try to replace this with GenerationType.IDENTITY
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer no;
     private String type;
     private String name;

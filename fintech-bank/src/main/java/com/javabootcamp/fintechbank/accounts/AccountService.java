@@ -1,5 +1,9 @@
 package com.javabootcamp.fintechbank.accounts;
 
+import com.javabootcamp.fintechbank.accounts.models.create_account.CreateAccountRequest;
+import com.javabootcamp.fintechbank.accounts.models.get_account.AccountResponse;
+import com.javabootcamp.fintechbank.accounts.models.deposit.DepositRequest;
+import com.javabootcamp.fintechbank.entities.Account;
 import com.javabootcamp.fintechbank.exceptions.InternalServerException;
 import com.javabootcamp.fintechbank.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,18 @@ public class AccountService {
 
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
+    }
+
+    public AccountResponse createAccount(CreateAccountRequest createAccountRequest) {
+        Account account = new Account();
+
+        account.setType(createAccountRequest.type().getType());
+        account.setName(createAccountRequest.name());
+        account.setBalance(createAccountRequest.balance());
+
+        accountRepository.save(account);
+
+        return new AccountResponse(account.getNo(), account.getType(), account.getName(), account.getBalance());
     }
 
     public List<AccountResponse> getAccounts() {

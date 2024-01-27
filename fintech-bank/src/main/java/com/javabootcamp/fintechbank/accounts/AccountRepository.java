@@ -1,5 +1,6 @@
 package com.javabootcamp.fintechbank.accounts;
 
+import com.javabootcamp.fintechbank.entities.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

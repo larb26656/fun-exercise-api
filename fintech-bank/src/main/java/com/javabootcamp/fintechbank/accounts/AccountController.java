@@ -1,5 +1,8 @@
 package com.javabootcamp.fintechbank.accounts;
 
+import com.javabootcamp.fintechbank.accounts.models.create_account.CreateAccountRequest;
+import com.javabootcamp.fintechbank.accounts.models.get_account.AccountResponse;
+import com.javabootcamp.fintechbank.accounts.models.deposit.DepositRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,9 +32,22 @@ public class AccountController {
                                     array = @ArraySchema(schema = @Schema(implementation = AccountResponse.class)))
                     })
     })
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @GetMapping("")
     public List<AccountResponse> getAccounts() {
         return accountService.getAccounts();
+    }
+
+    @Operation(summary = "จนมาเห็นกับตา จนพาใจมาเจ็บ")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "ฉีกบ่มีหม่องเย็บ หัวใจที่ให้เจ้า",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AccountResponse.class))
+                    })
+    })
+    @PostMapping("")
+    public AccountResponse createAccount(@RequestBody @Valid CreateAccountRequest createAccountRequest) {
+        return accountService.createAccount(createAccountRequest);
     }
 
     @Operation(summary = "withdraw from an account")
@@ -42,7 +58,7 @@ public class AccountController {
                                     schema = @Schema(implementation = AccountResponse.class))
                     })
     })
-    @RequestMapping(value = "/{accountNo}/deposit", method = RequestMethod.POST)
+    @PostMapping("/{accountNo}/deposit")
     public AccountResponse depositAccount(
             @PathVariable(name = "accountNo") Integer accountNo,
             @RequestBody @Valid DepositRequest depositRequest
